@@ -1,23 +1,25 @@
-/**
- * Detects if an image blob is a double-page spread.
- * @param {Blob} blob - The image blob
- * @returns {Promise<boolean>} - True if ratio > 1.3
- */
 export const detectImageRatio = (blob) => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const img = new Image();
     const url = URL.createObjectURL(blob);
     
-    img.onload = () => {
-      const ratio = img.naturalWidth / img.naturalHeight;
-      URL.revokeObjectURL(url); // Clean up memory immediately
-      resolve(ratio > 1.3);
+    img.onload = async () => {
+      try {
+        // Optimization: Decode off-thread before checking dimensions
+        await img.decode(); 
+        const ratio = img.naturalWidth / img.naturalHeight;
+        URL.revokeObjectURL(url);
+        resolve(ratio > 1.3);
+      } catch (e) {
+        URL.revokeObjectURL(url);
+        resolve(false); // Fallback for corrupt images
+      }
     };
-    
-    img.onerror = () => reject(new Error("Failed to load image for ratio detection"));
     img.src = url;
   });
 };
+
+// ... keep buildTwoPageLayout and emptyNode from previous version
 
 /**
  * Builds the array mapping for 2-page mode based on spreads.
