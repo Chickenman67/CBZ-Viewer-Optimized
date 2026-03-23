@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ultimate CBZ Reader v7</title>
+  
+  <link rel="stylesheet" href="./css/styles.css">
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" defer></script>
+  
+  <script type="module" src="./js/app.js" defer></script>
+</head>
+
+<body>
+  <div id="loading" role="status" aria-live="polite">Loading...</div>
+  
+  <main id="viewer" aria-label="Comic Viewer"></main>
+
+  <nav id="controls" aria-label="Viewer Controls">
+    <div class="control-group">
+      <label for="fileInput" class="custom-file-label" tabindex="0">📂 Open CBZ</label>
+      <input type="file" id="fileInput" accept=".cbz" multiple aria-hidden="true">
+      <button id="btnDirection" aria-label="Toggle Reading Direction">LTR</button>
+    </div>
+
+    <div class="control-group">
+      <button class="btn-mode" data-mode="page" aria-pressed="true">1-Page</button>
+      <button class="btn-mode" data-mode="two" aria-pressed="false">2-Page</button>
+      <button class="btn-mode" data-mode="scroll" aria-pressed="false">Scroll</button>
+    </div>
+
+    <div class="control-group">
+      <button id="btnPrev" aria-label="Previous Page">◀</button>
+      <span id="pageCounter" aria-live="polite">Page 0 / 0</span>
+      <button id="btnNext" aria-label="Next Page">▶</button>
+    </div>
+
+    <div class="control-group">
+      <label for="zoomSlider" class="sr-only">Zoom Level</label>
+      <span class="zoom-label">Zoom</span>
+      <input type="range" id="zoomSlider" min="50" max="200" value="100" aria-label="Zoom slider">
+      <button id="btnFullscreen" aria-label="Toggle Fullscreen">⛶ Fullscreen</button>
+    </div>
+  </nav>
+</body>
+</html>
