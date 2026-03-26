@@ -10,7 +10,7 @@ export const loadCBZFiles = (files, state, updateLoading) => {
     const worker = new Worker('./js/worker.js');
 
     // Clean up previous URLs to prevent memory leaks
-    state.imageUrls.forEach(url => URL.createObjectURL(url)); 
+    state.imageUrls.forEach(url => URL.revokeObjectURL(url));
     state.imageUrls = [];
     state.imageBlobs = [];
     state.spreadMap = [];

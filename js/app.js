@@ -44,6 +44,9 @@ const initApp = () => {
     // Initial Render
     Renderer.setMode(state);
     setLoader("", 0);
+
+    // ✅ NEW: Reset the input so it's ready for the next file
+    event.target.value = ''; 
   });
 
   // 2. Mode Switching
