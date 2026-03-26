@@ -39,14 +39,17 @@ const initApp = () => {
     const files = Array.from(event.target.files);
     if (!files.length) return;
 
-    await loadCBZFiles(files, state, setLoader);
-    
-    // Initial Render
-    Renderer.setMode(state);
-    setLoader("", 0);
-
-    // ✅ NEW: Reset the input so it's ready for the next file
-    event.target.value = ''; 
+    try {
+      await loadCBZFiles(files, state, setLoader);
+      Renderer.setMode(state);
+      setLoader("", 0);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      // ✅ Essential: Reset the input so the SAME file can be reloaded 
+      // or the next file can trigger the 'change' event.
+      event.target.value = ''; 
+    }
   });
 
   // 2. Mode Switching
