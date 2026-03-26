@@ -16,11 +16,20 @@ const state = {
   readingDirection: "LTR"
 };
 
+// Keyboard bindings (default)
+const keyBindings = {
+  prev: ["ArrowLeft", "a"],
+  next: ["ArrowRight", "d"]
+};
+
 // DOM Elements
 const fileInput = document.getElementById("fileInput");
 const loading = document.getElementById("loading");
 const dirBtn = document.getElementById("btnDirection");
 const modeBtns = document.querySelectorAll(".btn-mode");
+const btnResetZoom = document.getElementById("btnResetZoom");
+
+
 
 /**
  * Updates loading UI
@@ -75,9 +84,16 @@ const initApp = () => {
       Renderer.showTwoPageSpread(state);
     }
   });
+  // Reset zoom button (default fit)
+  btnResetZoom.addEventListener("click", () => {
+    const zoomSlider = document.getElementById("zoomSlider");
+    if (!zoomSlider) return;
 
+    zoomSlider.value = 100;
+    zoomSlider.dispatchEvent(new Event("input", { bubbles: true }));
+  });
   // 4. Initialize Sub-modules
-  initNavigation(state, Renderer);
+  initNavigation(state, Renderer, keyBindings);
   initZoom(state);
   initFullscreen();
 };

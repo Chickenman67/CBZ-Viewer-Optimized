@@ -3,7 +3,7 @@
  * @param {Object} state - Application state
  * @param {Object} Renderer - The renderer instance
  */
-export const initNavigation = (state, Renderer) => {
+export const initNavigation = (state, Renderer, keyBindings) => {
   const btnPrev = document.getElementById("btnPrev");
   const btnNext = document.getElementById("btnNext");
 
@@ -31,8 +31,23 @@ export const initNavigation = (state, Renderer) => {
   btnNext.addEventListener("click", nextPage);
   btnPrev.addEventListener("click", prevPage);
 
+  const normalizeKey = (key) => (key.length === 1 ? key.toLowerCase() : key);
+
   document.addEventListener("keydown", (e) => {
-    if (e.key === "ArrowRight") nextPage();
-    if (e.key === "ArrowLeft") prevPage();
+    const activeTag = document.activeElement?.tagName;
+    if (activeTag === "INPUT" || activeTag === "TEXTAREA") return;
+
+    const pressed = normalizeKey(e.key);
+    const prevKeys = keyBindings.prev.map(normalizeKey);
+    const nextKeys = keyBindings.next.map(normalizeKey);
+
+    if (prevKeys.includes(pressed)) {
+      e.preventDefault();
+      prevPage();
+    }
+    if (nextKeys.includes(pressed)) {
+      e.preventDefault();
+      nextPage();
+    }
   });
 };

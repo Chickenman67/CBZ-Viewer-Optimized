@@ -16,12 +16,11 @@ export const initZoom = (state) => {
     requestAnimationFrame(() => {
       const zoomValue = zoomSlider.value + "vh";
 
-      if (state.mode === "page" || state.mode === "two") {
-        const images = document.querySelectorAll("#viewer img");
-        images.forEach(img => {
-          img.style.maxHeight = zoomValue;
-        });
-      }
+      const images = document.querySelectorAll("#viewer img");
+      images.forEach(img => {
+        img.style.maxHeight = zoomValue;
+      });
+
       isUpdating = false;
     });
   });

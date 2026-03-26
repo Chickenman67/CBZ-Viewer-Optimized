@@ -113,9 +113,12 @@ export const Renderer = {
     // Document Fragment used to batch DOM insertions
     const fragment = document.createDocumentFragment();
     
+    const zoomValue = this.zoomSlider ? this.zoomSlider.value + "vh" : "100vh";
+
     state.imageUrls.forEach((url) => {
       const img = document.createElement("img");
       img.style.maxWidth = "100%";
+      img.style.maxHeight = zoomValue;
       img.style.marginBottom = "10px";
       img.src = url;
       img.loading = "lazy"; // Native lazy loading for massive performance gain
