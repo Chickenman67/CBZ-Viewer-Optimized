@@ -9,20 +9,20 @@ export const initNavigation = (state, Renderer, keyBindings) => {
 
   const nextPage = () => {
     if (state.mode === "page") {
-      state.currentPage++;
+      state.currentPage = Math.min(state.imageUrls.length - 1, state.currentPage + 1);
       Renderer.showPage(state);
     } else if (state.mode === "two") {
-      state.twoPageIndex++;
+      state.twoPageIndex = Math.min(state.twoPageLayout.length - 1, state.twoPageIndex + 1);
       Renderer.showTwoPageSpread(state);
     }
   };
 
   const prevPage = () => {
     if (state.mode === "page") {
-      state.currentPage--;
+      state.currentPage = Math.max(0, state.currentPage - 1);
       Renderer.showPage(state);
     } else if (state.mode === "two") {
-      state.twoPageIndex--;
+      state.twoPageIndex = Math.max(0, state.twoPageIndex - 1);
       Renderer.showTwoPageSpread(state);
     }
   };

@@ -54,7 +54,7 @@ export const loadCBZFiles = async (files, state, updateLoading) => {
           state.spreadMap.push(isSpread);
         }
 
-        state.twoPageLayout = buildTwoPageLayout(state.spreadMap);
+        state.twoPageLayout = buildTwoPageLayout(state.spreadMap, state.twoPageShift);
         state.currentPage = 0;
 
         worker.terminate();
