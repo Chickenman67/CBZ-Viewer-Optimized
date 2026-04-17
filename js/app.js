@@ -1,5 +1,4 @@
 import { loadCBZFiles } from './fileLoader.js';
-import { buildTwoPageLayout } from './utils.js';
 import { Renderer } from './renderer.js';
 import { initNavigation } from './navigation.js';
 import { initZoom } from './zoom.js';
@@ -14,7 +13,6 @@ const state = {
   mode: "page",
   currentPage: 0,
   twoPageIndex: 0,
-  twoPageShift: false,
   readingDirection: "LTR"
 };
 
@@ -28,7 +26,6 @@ const keyBindings = {
 const fileInput = document.getElementById("fileInput");
 const loading = document.getElementById("loading");
 const dirBtn = document.getElementById("btnDirection");
-const shiftBtn = document.getElementById("btnShiftPages");
 const modeBtns = document.querySelectorAll(".btn-mode");
 const btnResetZoom = document.getElementById("btnResetZoom");
 
@@ -82,23 +79,11 @@ const initApp = () => {
     state.readingDirection = state.readingDirection === "LTR" ? "RTL" : "LTR";
     dirBtn.textContent = state.readingDirection;
 
+    // Only re-render if in two-page mode
     if (state.mode === "two") {
       Renderer.showTwoPageSpread(state);
     }
   });
-
-  // 4. Two-page shift alignment
-  shiftBtn?.addEventListener("click", () => {
-    state.twoPageShift = !state.twoPageShift;
-    shiftBtn.setAttribute("aria-pressed", state.twoPageShift ? "true" : "false");
-    shiftBtn.textContent = state.twoPageShift ? "Shift On" : "Shift Off";
-
-    state.twoPageLayout = buildTwoPageLayout(state.spreadMap, state.twoPageShift);
-    if (state.mode === "two") {
-      Renderer.setMode(state);
-    }
-  });
-
   // Reset zoom button (default fit)
   btnResetZoom.addEventListener("click", () => {
     const zoomSlider = document.getElementById("zoomSlider");

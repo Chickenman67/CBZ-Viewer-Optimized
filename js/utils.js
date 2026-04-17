@@ -26,15 +26,10 @@ export const detectImageRatio = (blob) => {
  * @param {boolean[]} spreadMap - Array indicating if an index is a spread
  * @returns {Array<Array<number>>} - Mapped page indices
  */
-export const buildTwoPageLayout = (spreadMap, shiftFirstPage = false) => {
+export const buildTwoPageLayout = (spreadMap) => {
   const layout = [];
   let i = 0;
-
-  if (shiftFirstPage && spreadMap.length > 1 && !spreadMap[0]) {
-    layout.push([0]);
-    i = 1;
-  }
-
+  
   while (i < spreadMap.length) {
     if (spreadMap[i]) {
       layout.push([i]);

@@ -82,24 +82,21 @@ export const Renderer = {
 
     const loadImg = (imgEl, srcIndex) => {
       imgEl.style.display = "block";
-      imgEl.loading = "lazy";
-      imgEl.decoding = "async";
       imgEl.src = state.imageUrls[srcIndex];
       imgEl.onload = () => imgEl.classList.add("loaded");
     };
 
-    img2.style.display = "none";
-    img2.src = "";
-
     if (state.readingDirection === "LTR") {
       loadImg(img1, first);
       if (second !== undefined) loadImg(img2, second);
+      else img2.style.display = "none";
     } else {
       if (second !== undefined) {
         loadImg(img1, second);
         loadImg(img2, first);
       } else {
         loadImg(img1, first);
+        img2.style.display = "none";
       }
     }
 
